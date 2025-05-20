@@ -102,18 +102,28 @@ button {
 }
 
 .lista-tarefas li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   background-color: #e9ecef;
   margin-bottom: 0.5rem;
   padding: 0.75rem;
   border-radius: 8px;
   font-size: 1rem;
-  border: #000 solid 1px;
+}
+
+.lista-tarefas li input[type="checkbox"] {
+  margin-left: 20px;
 }
 
 .lista-tarefas li strong {
   color: #030608;
 }
 
+.lista-tarefas p {
+  margin-top: auto;
+  color: #333;
+}
 
 .manha {
   background-color: #d9f2ff;
@@ -128,4 +138,9 @@ button {
 .noite {
   background-color: #e0d9ff;
   border: #000 solid 1px;
+}
+
+.concluida {
+  text-decoration: line-through;
+  color: #aaa;
 }

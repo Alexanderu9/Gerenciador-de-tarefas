@@ -7,7 +7,7 @@ function App() {
 
   return (
     <div className='Container'>
-    <div className='NovaTarefa'>< NovaTarefa concluidas= {0} /></div>
+    <div className='NovaTarefa'>< NovaTarefa /></div>
     </div>
   )
 }

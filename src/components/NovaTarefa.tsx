@@ -5,13 +5,10 @@ import { useState } from 'react';
 interface Tarefa {
   descricao: string;
   horario: string;
+  concluida?: boolean;
 }
 
-type Props = {
-  concluidas : number;
-};
-
-function NovaTarefa(props: Props) {
+function NovaTarefa() {
   const [descricao, setDescricao] = useState<string>('');
   const [horario, setHorario] = useState<string>('');
   const [tarefas, setTarefas] = useState<Tarefa[]>([]);
@@ -24,11 +21,22 @@ function NovaTarefa(props: Props) {
       return;
     }
 
-    const novaTarefa: Tarefa = { descricao, horario };
+    const novaTarefa: Tarefa = { descricao, horario, concluida: false };
     setTarefas([...tarefas, novaTarefa]);
     setDescricao('');
     setHorario('');
     alert("Tarefa adicionada com sucesso!");
+  };
+
+  const handleCheckboxChange = (index: number) => {
+    const novasTarefas = tarefas.map((tarefa, i) =>
+      i === index ? { ...tarefa, concluida: !tarefa.concluida } : tarefa
+    );
+    setTarefas(novasTarefas);
+  };
+
+  const contarConcluidas = (horario: string) => {
+    return tarefas.filter(t => t.horario === horario && t.concluida).length;
   };
 
   return (
@@ -45,7 +53,6 @@ function NovaTarefa(props: Props) {
             placeholder="Descreva sua tarefa..."
           ></textarea>
           <br />
-          
 
           <select
             className="horarios"
@@ -64,38 +71,72 @@ function NovaTarefa(props: Props) {
 
       <div className='Listas'>
         <div className="listas-grid">
+          
+         
           <ul className="lista-tarefas manha">
             <h3>Manhã</h3>
-            {tarefas.filter(t => t.horario === 'Manhã').map((tarefa, index) => (
-              <li key={`manha-${index}`}>
-                 {tarefa.descricao}
-              </li>
-            ))}
+            {tarefas.map((tarefa, index) =>
+              tarefa.horario === 'Manhã' && (
+                <li key={`manha-${index}`}>
+                   <span className={tarefa.concluida ? 'concluida' : ''}>
+                   {tarefa.descricao}
+                   </span>
+                  <input
+                    type='checkbox'
+                    checked={tarefa.concluida || false}
+                    onChange={() => handleCheckboxChange(index)}
+                  />
+                </li>
+              )
+            )}
+            <p><strong>Tarefas Concluídas: {contarConcluidas('Manhã')}</strong></p>
           </ul>
 
+         
           <ul className="lista-tarefas tarde">
             <h3>Tarde</h3>
-            {tarefas.filter(t => t.horario === 'Tarde').map((tarefa, index) => (
-              <li key={`tarde-${index}`}>
-                 {tarefa.descricao}
-              </li>
-            ))}
+            {tarefas.map((tarefa, index) =>
+              tarefa.horario === 'Tarde' && (
+                <li key={`tarde-${index}`}>
+                 <span className={tarefa.concluida ? 'concluida' : ''}>
+                   {tarefa.descricao}
+                </span>
+                  <input
+                    type='checkbox'
+                    checked={tarefa.concluida || false}
+                    onChange={() => handleCheckboxChange(index)}
+                  />
+                </li>
+              )
+            )}
+            <p><strong>Tarefas Concluídas: {contarConcluidas('Tarde')}</strong></p>
           </ul>
 
+          
           <ul className="lista-tarefas noite">
             <h3>Noite</h3>
-            {tarefas.filter(t => t.horario === 'Noite').map((tarefa, index) => (
-              <li key={`noite-${index}`}>
-                {tarefa.descricao}
-              </li>
-            ))}
+            {tarefas.map((tarefa, index) =>
+              tarefa.horario === 'Noite' && (
+                <li key={`noite-${index}`}>
+                  <span className={tarefa.concluida ? 'concluida' : ''}>
+                   {tarefa.descricao}
+                  </span>
+                  <input
+                    type='checkbox'
+                    checked={tarefa.concluida || false}
+                    onChange={() => handleCheckboxChange(index)}
+                  />
+                </li>
+              )
+            )}
+            <p><strong>Tarefas Concluídas: {contarConcluidas('Noite')}</strong></p>
           </ul>
-        <p> <strong>Tarefas Concluidas: {props.concluidas} </strong> </p>
+
         </div>
       </div>
-
     </div>
   );
 }
 
 export default NovaTarefa;
+
