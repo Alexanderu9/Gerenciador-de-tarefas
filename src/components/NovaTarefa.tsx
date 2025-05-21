@@ -8,10 +8,14 @@ interface Tarefa {
   concluida?: boolean;
 }
 
-function NovaTarefa() {
+interface Props {
+  tarefas: Tarefa[];
+  setTarefas: React.Dispatch<React.SetStateAction<Tarefa[]>>;
+}
+
+function NovaTarefa({ tarefas, setTarefas }: Props) {
   const [descricao, setDescricao] = useState<string>('');
   const [horario, setHorario] = useState<string>('');
-  const [tarefas, setTarefas] = useState<Tarefa[]>([]);
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();

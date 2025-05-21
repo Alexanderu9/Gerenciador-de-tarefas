@@ -12,7 +12,8 @@ body {
   grid-template-rows: repeat(3, 1fr);
   place-items: center;
   grid-template-areas: 
-  " NovaTarefa NovaTarefa NovaTarefa " 
+  " NovaTarefa NovaTarefa NovaTarefa "
+  " Percentual   Percentual Percentual " 
   ;
   gap: 10px;
   height: 100vh;
@@ -23,4 +24,8 @@ body {
 
 .NovaTarefa {
   grid-area: NovaTarefa;
+}
+
+.Percentual {
+  grid-area: Percentual;
 }
