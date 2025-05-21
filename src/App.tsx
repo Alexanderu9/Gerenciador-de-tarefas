@@ -1,7 +1,7 @@
 import './App.css';
 import NovaTarefa from './components/NovaTarefa';
 import Percentual from './components/Percentual';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 interface Tarefa {
   descricao: string;
@@ -10,10 +10,21 @@ interface Tarefa {
 }
 
 function App() {
-  const [tarefas, setTarefas] = useState<Tarefa[]>([]);
+
+  const [tarefas, setTarefas] = useState<Tarefa[]>(() => {
+    const tarefasStorage = localStorage.getItem('tarefas');
+    return tarefasStorage ? JSON.parse(tarefasStorage) : [];
+  });
+
+
+  useEffect(() => {
+    localStorage.setItem('tarefas', JSON.stringify(tarefas));
+  }, [tarefas]);
+
 
   const totalTarefas = tarefas.length;
   const tarefasCompletas = tarefas.filter(t => t.concluida).length;
+
   return (
     <div className='Container'>
       <div className='NovaTarefa'>
